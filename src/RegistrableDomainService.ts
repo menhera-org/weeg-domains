@@ -36,7 +36,7 @@ export class RegistrableDomainService extends BackgroundService<string[], string
 
   private static readonly HOSTNAME_SERVICE = HostnameService.getInstance();
 
-  private publicSuffixListStorage: StorageItem<PublicSuffixListData> | null = null;
+  private publicSuffixListStorage: StorageItem<PublicSuffixListData> | undefined;
   protected initializeBackground() {
     // nothing.
     this.publicSuffixListStorage = new StorageItem<PublicSuffixListData>(RegistrableDomainService.PSL_STORAGE_KEY, {
@@ -89,7 +89,7 @@ export class RegistrableDomainService extends BackgroundService<string[], string
   }
 
   private async getRules(): Promise<PublicSuffixListData> {
-    if (this.publicSuffixListStorage === null) {
+    if (this.publicSuffixListStorage == null) {
       throw new Error('Not initialized.');
     }
     const data = await this.publicSuffixListStorage.getValue();
@@ -205,6 +205,11 @@ export class RegistrableDomainService extends BackgroundService<string[], string
    */
   public async getRegistrableDomains(urls: string[]): Promise<string[]> {
     return this.call(urls);
+  }
+
+  public async getRegistrableDomain(url: string): Promise<string> {
+    const domains = await this.getRegistrableDomains([url]);
+    return domains[0] as string;
   }
 
   public async getUniqueRegistrableDomains(urls: Iterable<string>): Promise<string[]> {
