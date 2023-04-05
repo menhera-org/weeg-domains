@@ -17,14 +17,18 @@
   @license
 */
 
-export { HostnameService } from "./HostnameService";
+import { InetVersion } from "./InetVersion";
 
-export { InetAddress } from "./InetAddress";
-export { InetAddressFactory } from "./InetAddressFactory";
-export { InetAddressConstructor } from "./InetAddressConstructor";
-export { InetVersion } from "./InetVersion";
-export { Ipv4Address } from "./Ipv4Address";
-export { Ipv6Address } from "./Ipv6Address";
+export interface InetAddress {
+  readonly version: InetVersion;
 
-export { RegistrableDomainService } from "./RegistrableDomainService";
-export { UrlService } from "./UrlService";
+  /**
+   * Converts this InetAddress to a Uint8Array.
+   */
+  toByteArray(): Uint8Array;
+
+  /**
+   * Converts this InetAddress to a string.
+   */
+  toString(): string;
+}

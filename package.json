@@ -20,12 +20,16 @@
   },
   "homepage": "https://github.com/menhera-org/weeg-domains#readme",
   "devDependencies": {
+    "@types/punycode": "^2.1.0",
     "@types/webextension-polyfill": "^0.10.0",
     "typescript": "^5.0.3"
   },
   "type": "module",
   "types": "dist/index.d.ts",
   "dependencies": {
-    "webextension-polyfill": "^0.10.0"
+    "punycode": "^2.3.0",
+    "webextension-polyfill": "^0.10.0",
+    "weeg-storage": "^0.3.0",
+    "weeg-utils": "^0.5.0"
   }
 }

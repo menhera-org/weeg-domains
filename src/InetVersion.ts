@@ -17,14 +17,7 @@
   @license
 */
 
-export { HostnameService } from "./HostnameService";
-
-export { InetAddress } from "./InetAddress";
-export { InetAddressFactory } from "./InetAddressFactory";
-export { InetAddressConstructor } from "./InetAddressConstructor";
-export { InetVersion } from "./InetVersion";
-export { Ipv4Address } from "./Ipv4Address";
-export { Ipv6Address } from "./Ipv6Address";
-
-export { RegistrableDomainService } from "./RegistrableDomainService";
-export { UrlService } from "./UrlService";
+export enum InetVersion {
+  V4 = 4,
+  V6 = 6,
+}

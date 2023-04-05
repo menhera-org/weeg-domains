@@ -17,14 +17,16 @@
   @license
 */
 
-export { HostnameService } from "./HostnameService";
+import { InetAddress } from "./InetAddress";
 
-export { InetAddress } from "./InetAddress";
-export { InetAddressFactory } from "./InetAddressFactory";
-export { InetAddressConstructor } from "./InetAddressConstructor";
-export { InetVersion } from "./InetVersion";
-export { Ipv4Address } from "./Ipv4Address";
-export { Ipv6Address } from "./Ipv6Address";
+export interface InetAddressConstructor {
+  /**
+   * @throws Error for invalid addresses.
+   */
+  fromString(str: string): InetAddress;
 
-export { RegistrableDomainService } from "./RegistrableDomainService";
-export { UrlService } from "./UrlService";
+  /**
+   * @throws Error for invalid addresses.
+   */
+  fromByteArray(bytes: Uint8Array): InetAddress;
+}

@@ -17,14 +17,24 @@
   @license
 */
 
-export { HostnameService } from "./HostnameService";
+import { Ipv4Address } from "./Ipv4Address";
+import { Ipv6Address } from "./Ipv6Address";
+import { InetAddress } from "./InetAddress";
 
-export { InetAddress } from "./InetAddress";
-export { InetAddressFactory } from "./InetAddressFactory";
-export { InetAddressConstructor } from "./InetAddressConstructor";
-export { InetVersion } from "./InetVersion";
-export { Ipv4Address } from "./Ipv4Address";
-export { Ipv6Address } from "./Ipv6Address";
+export class InetAddressFactory {
+  public static createFromString(address: string): InetAddress {
+    if (address.includes(':')) {
+      return Ipv6Address.fromString(address);
+    } else {
+      return Ipv4Address.fromString(address);
+    }
+  }
 
-export { RegistrableDomainService } from "./RegistrableDomainService";
-export { UrlService } from "./UrlService";
+  public static createFromByteArray(bytes: Uint8Array): InetAddress {
+    if (bytes.length === 4) {
+      return Ipv4Address.fromByteArray(bytes);
+    } else {
+      return Ipv6Address.fromByteArray(bytes);
+    }
+  }
+}
