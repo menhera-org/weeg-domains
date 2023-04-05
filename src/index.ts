@@ -17,14 +17,14 @@
   @license
 */
 
-export { HostnameService } from "./HostnameService";
+export { HostnameService } from "./HostnameService.js";
 
-export { InetAddress } from "./InetAddress";
-export { InetAddressFactory } from "./InetAddressFactory";
-export { InetAddressConstructor } from "./InetAddressConstructor";
-export { InetVersion } from "./InetVersion";
-export { Ipv4Address } from "./Ipv4Address";
-export { Ipv6Address } from "./Ipv6Address";
+export { InetAddress } from "./InetAddress.js";
+export { InetAddressFactory } from "./InetAddressFactory.js";
+export { InetAddressConstructor } from "./InetAddressConstructor.js";
+export { InetVersion } from "./InetVersion.js";
+export { Ipv4Address } from "./Ipv4Address.js";
+export { Ipv6Address } from "./Ipv6Address.js";
 
-export { RegistrableDomainService } from "./RegistrableDomainService";
-export { UrlService } from "./UrlService";
+export { RegistrableDomainService } from "./RegistrableDomainService.js";
+export { UrlService } from "./UrlService.js";

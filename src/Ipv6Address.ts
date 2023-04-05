@@ -17,9 +17,9 @@
   @license
 */
 
-import { InetAddress } from "./InetAddress";
-import { InetAddressConstructor } from "./InetAddressConstructor";
-import { InetVersion } from "./InetVersion";
+import { InetAddress } from "./InetAddress.js";
+import { InetAddressConstructor } from "./InetAddressConstructor.js";
+import { InetVersion } from "./InetVersion.js";
 
 /**
  * This class represents an IPv6 address.

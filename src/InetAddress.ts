@@ -17,7 +17,7 @@
   @license
 */
 
-import { InetVersion } from "./InetVersion";
+import { InetVersion } from "./InetVersion.js";
 
 export interface InetAddress {
   readonly version: InetVersion;

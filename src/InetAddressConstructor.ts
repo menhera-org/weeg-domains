@@ -17,7 +17,7 @@
   @license
 */
 
-import { InetAddress } from "./InetAddress";
+import { InetAddress } from "./InetAddress.js";
 
 export interface InetAddressConstructor {
   /**

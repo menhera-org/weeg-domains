@@ -18,7 +18,7 @@
 */
 
 import { toUnicode } from "punycode/";
-import { Ipv4Address } from "./Ipv4Address";
+import { Ipv4Address } from "./Ipv4Address.js";
 
 export class HostnameService {
   // This must be at the end of static definitions.

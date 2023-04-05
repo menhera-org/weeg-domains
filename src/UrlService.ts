@@ -17,7 +17,7 @@
   @license
 */
 
-import { HostnameService } from "./HostnameService";
+import { HostnameService } from "./HostnameService.js";
 
 export class UrlService {
   private static readonly PRIVILEGED_SCHEMES = new Set([

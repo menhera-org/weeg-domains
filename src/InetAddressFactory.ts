@@ -17,9 +17,9 @@
   @license
 */
 
-import { Ipv4Address } from "./Ipv4Address";
-import { Ipv6Address } from "./Ipv6Address";
-import { InetAddress } from "./InetAddress";
+import { Ipv4Address } from "./Ipv4Address.js";
+import { Ipv6Address } from "./Ipv6Address.js";
+import { InetAddress } from "./InetAddress.js";
 
 export class InetAddressFactory {
   public static createFromString(address: string): InetAddress {

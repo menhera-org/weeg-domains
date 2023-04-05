@@ -20,7 +20,7 @@
 import { BackgroundService } from 'weeg-utils';
 import { StorageItem } from 'weeg-storage';
 
-import { HostnameService } from './HostnameService';
+import { HostnameService } from './HostnameService.js';
 
 type PublicSuffixListData = {
   rules: string[];

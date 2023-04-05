@@ -17,9 +17,9 @@
   @license
 */
 
-import { InetAddress } from "./InetAddress";
-import { InetAddressConstructor } from "./InetAddressConstructor";
-import { InetVersion } from "./InetVersion";
+import { InetAddress } from "./InetAddress.js";
+import { InetAddressConstructor } from "./InetAddressConstructor.js";
+import { InetVersion } from "./InetVersion.js";
 
 export const Ipv4Address: InetAddressConstructor = class Ipv4Address implements InetAddress {
   public readonly version = InetVersion.V4;
