@@ -1,6 +1,6 @@
 {
   "name": "weeg-domains",
-  "version": "0.3.0",
+  "version": "0.4.0",
   "description": "WebExtensions Experts Groups domains library",
   "main": "dist/index.js",
   "scripts": {

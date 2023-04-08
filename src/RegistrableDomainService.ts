@@ -95,12 +95,19 @@ export class RegistrableDomainService extends BackgroundService<string[], string
     const data = await this.publicSuffixListStorage.getValue();
     const now = Date.now();
     if (!data.initialized || now - data.updatedTime > RegistrableDomainService.PSL_UPDATE_INTERVAL) {
-      const { rules, exceptionRules } = await RegistrableDomainService.fetchRules();
-      data.rules = rules;
-      data.exceptionRules = exceptionRules;
-      data.updatedTime = now;
-      data.initialized = true;
-      await this.publicSuffixListStorage.setValue(data);
+      try {
+        const { rules, exceptionRules } = await RegistrableDomainService.fetchRules();
+        data.rules = rules;
+        data.exceptionRules = exceptionRules;
+        data.updatedTime = now;
+        data.initialized = true;
+        await this.publicSuffixListStorage.setValue(data);
+      } catch (e) {
+        if (!data.initialized) {
+          throw e;
+        }
+        console.warn(e);
+      }
     }
     return data;
   }
