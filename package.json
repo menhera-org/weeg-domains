@@ -1,6 +1,6 @@
 {
   "name": "weeg-domains",
-  "version": "0.4.0",
+  "version": "0.5.0",
   "description": "WebExtensions Experts Groups domains library",
   "main": "dist/index.js",
   "scripts": {
@@ -29,6 +29,6 @@
     "punycode": "^2.3.0",
     "webextension-polyfill": "^0.10.0",
     "weeg-storage": "^0.4.0",
-    "weeg-utils": "^0.6.0"
+    "weeg-utils": "^0.7.0"
   }
 }

@@ -37,6 +37,11 @@ export class RegistrableDomainService extends BackgroundService<string[], string
   private static readonly HOSTNAME_SERVICE = HostnameService.getInstance();
 
   private publicSuffixListStorage: StorageItem<PublicSuffixListData> | undefined;
+
+  public override getServiceName(): string {
+    return 'RegistrableDomainService';
+  }
+
   protected initializeBackground() {
     // nothing.
     this.publicSuffixListStorage = new StorageItem<PublicSuffixListData>(RegistrableDomainService.PSL_STORAGE_KEY, {
