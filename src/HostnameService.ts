@@ -19,10 +19,15 @@
 
 import { toUnicode } from "punycode/";
 import { Ipv4Address } from "./Ipv4Address.js";
+import { Ipv6Address } from "./Ipv6Address.js";
 
 export class HostnameService {
   // This must be at the end of static definitions.
   private static readonly INSTANCE = new HostnameService();
+  private static readonly LOCAL_IP_HOSTNAMES: ReadonlySet<string> = new Set([
+    '127.0.0.1',
+    '[::1]',
+  ]);
 
   public static getInstance(): HostnameService {
     return this.INSTANCE;
@@ -48,6 +53,8 @@ export class HostnameService {
       const { hostname } = new URL(url);
       if (hostname.startsWith("[")) {
         if (hostname.endsWith("]")) {
+          const ipv6Address = hostname.slice(1, -1);
+          Ipv6Address.fromString(ipv6Address);
           return true;
         }
         throw new Error("Invalid hostname");
@@ -57,6 +64,15 @@ export class HostnameService {
     } catch (e) {
       return false;
     }
+  }
+
+  public isHostnameLocalhost(hostname: string): boolean {
+    if (this.isHostnameIpAddress(hostname)) {
+      return HostnameService.LOCAL_IP_HOSTNAMES.has(hostname);
+    }
+    const domainParts = hostname.split(".");
+    const domainEnding = domainParts[domainParts.length - 1] as string;
+    return domainEnding == 'localhost'; // allow something.localhost
   }
 
   public compareDomains(domain1: string, domain2: string): number {
