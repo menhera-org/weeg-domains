@@ -29,6 +29,14 @@ type PublicSuffixListData = {
   initialized: boolean;
 };
 
+/** The parts of Firefox's publicSuffix API (Firefox 153+) used here. */
+type PublicSuffixApi = {
+  getDomain(
+    hostname: string,
+    options?: { allowIPAddress?: boolean; allowPlainSuffix?: boolean; allowUnknownSuffix?: boolean },
+  ): string | null;
+};
+
 export class RegistrableDomainService extends BackgroundService<string[], string[]> {
   private static readonly PUBLIC_SUFFIX_LIST_URL = 'https://publicsuffix.org/list/public_suffix_list.dat';
   private static readonly PSL_STORAGE_KEY = "weeg.dns.publicSuffixList";
@@ -191,7 +199,35 @@ export class RegistrableDomainService extends BackgroundService<string[], string
     return knownSuffix;
   }
 
+  /**
+   * Firefox 153+ provides the Public Suffix List through `browser.publicSuffix`
+   * (with the `publicSuffix` permission), so the list need not be downloaded.
+   */
+  private static getPublicSuffixApi(): PublicSuffixApi | undefined {
+    return (globalThis as { browser?: { publicSuffix?: PublicSuffixApi } }).browser?.publicSuffix;
+  }
+
+  private getRegistrableDomainWithApi(publicSuffix: PublicSuffixApi, url: string): string {
+    const hostname = this.getHostname(url);
+    if (hostname.length === 0) {
+      return '';
+    }
+    // Same results as the downloaded list: IP addresses and plain suffixes are returned as they are.
+    if (RegistrableDomainService.HOSTNAME_SERVICE.isHostnameIpAddress(url)) {
+      return hostname;
+    }
+    try {
+      return publicSuffix.getDomain(hostname, { allowPlainSuffix: true, allowUnknownSuffix: true }) ?? hostname;
+    } catch (e) {
+      return hostname;
+    }
+  }
+
   protected async execute(urls: string[]): Promise<string[]> {
+    const publicSuffix = RegistrableDomainService.getPublicSuffixApi();
+    if (publicSuffix) {
+      return urls.map((url) => this.getRegistrableDomainWithApi(publicSuffix, url));
+    }
     const ruleData = await this.getRules();
     const registrableDomains = urls.map((url) => {
       const domain = this.getHostname(url);
@@ -216,6 +252,11 @@ export class RegistrableDomainService extends BackgroundService<string[], string
    * @returns The list of registrable domains, or empty strings if not applicable.
    */
   public async getRegistrableDomains(urls: string[]): Promise<string[]> {
+    const publicSuffix = RegistrableDomainService.getPublicSuffixApi();
+    if (publicSuffix) {
+      // No need to ask the background page.
+      return urls.map((url) => this.getRegistrableDomainWithApi(publicSuffix, url));
+    }
     return this.call(urls);
   }
 
